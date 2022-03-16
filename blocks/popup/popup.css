@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Inter, Arial, sans-serif; 
+  font-family: Inter, Arial, sans-serif;
   font-style: normal;
   position: fixed;
   z-index: 100;
@@ -19,6 +19,6 @@
 
 @media(max-width: 768px) {
   .popup {
-    top: 128px; 
+    top: 128px;
   }
 }

@@ -6,7 +6,7 @@
   background-color: #ffffff;  
   border-radius: 10px;
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
   "elements__image"
   "elements__description"
   ;
