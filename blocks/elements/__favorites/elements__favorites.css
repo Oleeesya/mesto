@@ -1,0 +1,13 @@
+.elements__favorites {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: url(../../../img/rating.svg) no-repeat center;
+  height: 19px;
+  min-width: 22px;
+}
+
+.elements__favorites:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

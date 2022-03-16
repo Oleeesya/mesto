@@ -1,0 +1,25 @@
+.submit {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 14px 124px 18px 125px;
+  background-color: #000;
+  font-weight: 400;
+  color: #FFF;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+  border: none;
+  border-radius: 2px;
+}
+
+.submit:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+@media(max-width: 768px) {
+  .submit {
+    padding: 14px 82px;
+    font-size: 14px;
+  }
+}

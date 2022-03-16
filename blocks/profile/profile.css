@@ -1,0 +1,16 @@
+.profile {
+  box-sizing: border-box;
+  margin: 36.25px auto 0;
+  padding: 0;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+}
+
+@media(max-width: 768px) {
+  .profile {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 38.25px;
+  }
+}

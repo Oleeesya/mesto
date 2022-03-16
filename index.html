@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./pages/index.css">
+    <title>Mesto</title>
+</head>
+
+<body class="body">
+    <div class="page">
+        <header class="header">
+            <div class="header__logo">
+            </div>
+            <hr class="header__line">
+        </header>
+        <section class="profile">
+            <img class="profile__avatar" src="./img/Jacques-YvesCousteau.jpg" alt="Жак-Ив Кусто">
+            <div class="profile__info">
+                <h1 class="profile__title">
+                    Жак-Ив Кусто
+                </h1>
+                <h2 class="profile__subtitle">
+                    Исследователь океана
+                </h2>
+                <button type="button" class="edit-button"><img src="./img/Edit-Button.jpg"
+                        alt="Кнопка Редактирования"></button>
+            </div>
+            <button type="button" class="add-button"><img src="./img/Add-Button.jpg" alt="Кнопка Добавить"></button>
+        </section>
+        <section class="elements">
+            <div class="elements__element">
+                <img class="elements__image" src="./img/karachaevsk.jpg" alt="Карачаевск">
+                <div class="elements__description">
+                    <h3 class="elements__title">Карачаевск</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+            <div class="elements__element">
+                <img class="elements__image" src="./img/elbrus.jpg" alt="Эльбрус">
+                <div class="elements__description">
+                    <h3 class="elements__title">Гора Эльбрус</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+            <div class="elements__element">
+                <img class="elements__image" src="./img/dombai.jpg" alt="Домбай">
+                <div class="elements__description">
+                    <h3 class="elements__title">Домбай</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+            <div class="elements__element">
+                <img class="elements__image" src="./img/elbrus.jpg" alt="Эльбрус">
+                <div class="elements__description">
+                    <h3 class="elements__title">Гора Эльбрус</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+            <div class="elements__element">
+                <img class="elements__image" src="./img/dombai.jpg" alt="Домбай">
+                <div class="elements__description">
+                    <h3 class="elements__title">Домбай</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+            <div class="elements__element">
+                <img class="elements__image" src="./img/karachaevsk.jpg" alt="Карачаево-Черкесия">
+                <div class="elements__description">
+                    <h3 class="elements__title">Карачаево-Черкесия</h3>
+                    <input class="elements__like" type="checkbox" name="Like" id="like-checkbox">
+                    <label class="elements__favorites" for="like-checkbox"></label>
+                </div>
+            </div>
+
+        </section>
+        <footer class="footer">
+            <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+        </footer>
+    </div>
+    <div class="popup">
+        <div class="popup__container">
+            <button class="popup__close-button"></button>
+            <form class="popup__content">
+                <h3 class="popup__heading">Редактировать профиль</h3>
+                <input class="popup__title" type="text" value="Жак-Ив Кусто">
+                <input class="popup__subtitle" type="text" value="Исследователь океана">
+                <button type="submit" class="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    <script src="./script/script.js"></script>
+</body>
+
+</html>
