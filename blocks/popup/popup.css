@@ -8,17 +8,11 @@
   z-index: 100;
   color: #000;
   background: rgba(0, 0, 0, 0.15);
-  top: 195px;
+  top: 0;
   right: 0;
-  bottom: auto;
+  bottom: 0;
   left: 0;
   display: none;
   justify-content: center;
-  align-items: center;
-}
-
-@media(max-width: 768px) {
-  .popup {
-    top: 128px;
-  }
+  align-items: flex-start;
 }

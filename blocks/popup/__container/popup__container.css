@@ -7,11 +7,13 @@
   max-width: 430px;
   margin: 0 auto;
   padding: 34px 36px 37px;
+  top: 195px;
 }
 
 @media(max-width: 768px) {
   .popup__container {
     padding: 25px 22px;
     max-width: 282px;
+    top: 123px;
   }
 }
