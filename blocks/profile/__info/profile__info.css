@@ -1,20 +1,22 @@
 .profile__info {
   box-sizing: border-box;
-  margin: 0 244px 0 3.75px;
+  margin: 0 0 3.75px;
   padding: 0;
   color: #FFF;
   display: grid;
-  align-items: baseline;
+  align-items: center;
   grid-template-areas:
-  "profile__title profile__title edit-button"
-  "subtitle . .";
+  "profile__avatar profile__title edit-button"
+  "profile__avatar subtitle edit-button";
 }
 
 @media(max-width: 768px) {
   .profile__info {
     grid-template-areas:
+    "profile__avatar profile__avatar"
     "profile__title edit-button"
-    "subtitle .";
-    margin: 22.25px auto 0;
+    "subtitle subtitle";
+    margin: 0 auto;
+    justify-items: center;
   }
 }

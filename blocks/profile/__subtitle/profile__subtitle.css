@@ -1,6 +1,6 @@
 .profile__subtitle {
   box-sizing: border-box;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   grid-area: subtitle;
   font-weight: 400;
@@ -10,6 +10,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  justify-self: start;
 }
 
 @media(max-width: 768px) {
@@ -17,5 +18,8 @@
     font-size: 14px;
     line-height: 1.21;
     max-width: 264px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 14px;
   }
 }

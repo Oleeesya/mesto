@@ -2,5 +2,13 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  display: none;
+  height: 19px;
+  min-width: 22px;
+  background-color: #fff;
+  border: none;
+}
+
+.elements__like:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }

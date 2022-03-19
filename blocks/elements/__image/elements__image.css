@@ -2,6 +2,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  width: 282px;
+  height: 282px;
   border-radius: 10px 10px 0 0;
-  grid-area: elements__image;
+  object-fit: cover;
 }

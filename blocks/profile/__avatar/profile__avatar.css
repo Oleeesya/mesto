@@ -2,11 +2,14 @@
   box-sizing: border-box;
   padding: 0;
   margin: 3.75px 26.25px 3.75px 0;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
+  grid-area: profile__avatar;
 }
 
 @media(max-width: 768px) {
   .profile__avatar {
-    margin: 3.75px 26.25px 3.75px 22.5px;
+    margin-left: 22.5px;
   }
 }
