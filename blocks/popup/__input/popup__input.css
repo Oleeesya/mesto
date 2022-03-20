@@ -1,16 +1,10 @@
-.popup__subtitle {
+.popup__input {
   box-sizing: border-box;
-  margin: 0 0 48px;
-  padding: 0 0 13px;
+  margin: 0;
+  padding: 0 0 6px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.2;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-@media(max-width: 768px) {
-  .popup__subtitle {
-    margin-bottom: 45px;
-  }
 }

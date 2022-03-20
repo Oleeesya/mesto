@@ -3,14 +3,14 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  right: -42px;
-  top: -44px;
+  right: -40px;
+  top: -40px;
   cursor: pointer;
   border: none;
   background: none;
   height: 32px;
   width: 32px;
-  background-image: url(../../../img/Close-Icon.png);
+  background-image: url(../../../img/Close-Icon.svg);
   background-size:  cover;
 }
 
@@ -19,7 +19,7 @@
   cursor: pointer;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 880px) {
   .popup__close-button {
     right: 0;
     height: 20px;

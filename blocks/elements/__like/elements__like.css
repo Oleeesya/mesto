@@ -6,6 +6,7 @@
   min-width: 22px;
   background-color: #fff;
   border: none;
+  background-image: url(../../../img/rating.svg);
 }
 
 .elements__like:hover {

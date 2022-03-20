@@ -10,7 +10,7 @@
   "profile__avatar subtitle edit-button";
 }
 
-@media(max-width: 768px) {
+@media(max-width: 880px) {
   .profile__info {
     grid-template-areas:
     "profile__avatar profile__avatar"

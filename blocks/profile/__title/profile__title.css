@@ -13,12 +13,13 @@
   align-self: end;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 880px) {
   .profile__title {
     font-size: 27px;
     line-height: 1.22;
     max-width: 189px;
     margin-top: 22.25px;
     margin-right: 10px;
+    margin-left: 30px;
   }
 }

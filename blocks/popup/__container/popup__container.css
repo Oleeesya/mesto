@@ -3,15 +3,16 @@
   position: relative;
   border-radius: 10px;
   background-color: #FFF;
-  height: 330px;
+  min-height: 330px;
   width: 430px;
   margin: 0 auto;
   padding: 34px 36px 37px;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 880px) {
   .popup__container {
     padding: 25px 22px;
     max-width: 282px;
+    min-height: 322px;
   }
 }
