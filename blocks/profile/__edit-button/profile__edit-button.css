@@ -8,7 +8,7 @@
   background: #000;
   border: none;
   background-image: url(../../../img/Edit-Button.svg);
-  background-size: cover;
+  background-size: 24px;
 }
 
 .profile__edit-button:hover {
@@ -22,5 +22,6 @@
     height: 18px;
     margin-top: 22.25px;
     margin-bottom: 0;
+    background-size: 18px;
   }
 }
