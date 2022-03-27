@@ -1,3 +1,48 @@
+const initialCards  = [
+  {
+    name:'Карачаевск',
+    link:'./img/karachaevsk.jpg'
+  },
+  {
+    name:'Гора Эльбрус',
+    link:'./img/elbrus.jpg'
+  },
+  {
+    name:'Домбай',
+    link:'./img/dombai.jpg'
+  },
+  {
+    name:'Гора Эльбрус',
+    link:'./img/elbrus.jpg'
+  },
+  {
+    name:'Домбай',
+    link:'./img/dombai.jpg'
+  },
+  {
+    name:'Карачаевск',
+    link:'./img/karachaevsk.jpg'
+  }
+];
+
+const container = document.querySelector('.elements');
+
+const items = (item) => {
+  const templateElement = document.querySelector('#template-element');
+  const element = templateElement.content.querySelector('.elements__element').cloneNode(true);
+  const image = element.querySelector('.elements__image');
+  const cardName = element.querySelector('.elements__title');
+  image.setAttribute('src', item.link);
+  cardName.textContent = item.name;
+  return element;
+};
+
+const elements = initialCards.map(function(item) {
+  return items(item);
+});
+
+container.append(...elements);
+
 let popupElement = document.querySelector('.popup');
 let navButton = document.querySelector('.profile__edit-button');
 let closeButton = popupElement.querySelector('.popup__close-button');
