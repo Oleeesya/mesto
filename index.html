@@ -27,10 +27,11 @@
         </section>
         <template id="template-element">
             <article class="elements__element">
+                <button class="elements__trash" type="button"></button>
                 <img class="elements__image">
                 <div class="elements__description">
                     <h2 class="elements__title"></h2>
-                    <button class="elements__like" type="button"></button>
+                    <button class="elements__like elements__like_active" type="button"></button>
                 </div>
             </article>
         </template>
@@ -38,16 +39,29 @@
             <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
         </footer>
     </div>
-    <div class="popup">
+    <div class="popup popup_type_edit">
         <div class="popup__container">
             <button class="popup__close-button" type="button"></button>
-            <form class="popup__content" name="form-one">
+            <form class="popup__content popup__content_name_edit" name="edit-form">
                 <h2 class="popup__heading">Редактировать профиль</h2>
-                <input class="popup__input popup__input_name_header" type="text" name="title">
-                <input class="popup__input popup__input_name_paragraph" type="text" name="subtitle">
+                <input class="popup__input popup__input_edit_header" type="text" name="title">
+                <input class="popup__input popup__input_edit_paragraph" type="text" name="subtitle">
                 <button type="submit" class="popup__submit">Сохранить</button>
             </form>
         </div>
+    </div>
+    <div class="popup popup_type_create">
+        <div class="popup__container">
+            <button class="popup__close-button" type="button"></button>
+            <form class="popup__content popup__content_name_create" name="creat-form">
+                <h2 class="popup__heading">Новое место</h2>
+                <input class="popup__input popup__input_create_header" type="text" name="title" placeholder="Название">
+                <input class="popup__input popup__input_create_paragraph" type="url" name="url" placeholder="Ссылка на картинку">
+                <button type="submit" class="popup__submit">Создать</button>
+            </form>
+        </div>
+    </div>
+    <div class="popup popup_type_image">
     </div>
     <script src="./script/index.js"></script>
 </body>
