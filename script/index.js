@@ -33,14 +33,19 @@ const createItem = (item) => {
   const element = templateElement.content.querySelector('.elements__element').cloneNode(true);
   const image = element.querySelector('.elements__image');
   const cardName = element.querySelector('.elements__title');
+  const deleteCard = element.querySelector('.elements__trash');
   image.setAttribute('src', item.link);
   cardName.textContent = item.name;
+  // Прикрепляем обработчик для удаления карточки 
+  deleteCard.addEventListener('click', Delete);
+  
   return element;
 };
 
-// Отрисовка карточек из массива объектов
-const elements = initialCards.map(createItem);
-container.append(...elements);
+// Функция удаление карточки 
+const Delete = (event) => {
+  event.target.closest('.elements__element').remove();
+};
 
 // Попап редактирования профиля
 let popupElementEdit = document.querySelector('.popup_type_edit');
@@ -115,3 +120,7 @@ function formSubmitCreate (evt) {
 
 // Прикрепляем обработчик к форме создания новой карточки 
 formElementCreate.addEventListener('submit', formSubmitCreate); 
+
+// Отрисовка карточек из массива объектов
+const elements = initialCards.map(createItem);
+container.append(...elements);
