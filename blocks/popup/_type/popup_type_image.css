@@ -1,7 +1,6 @@
 .popup_type_image {
-  color: #FFF;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   background: rgba(0, 0, 0, 0.9);
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 1.25;
 }
