@@ -34,17 +34,25 @@ const createItem = (item) => {
   const image = element.querySelector('.elements__image');
   const cardName = element.querySelector('.elements__title');
   const deleteCard = element.querySelector('.elements__trash');
+  const likeCard = element.querySelector('.elements__like');
   image.setAttribute('src', item.link);
   cardName.textContent = item.name;
   // Прикрепляем обработчик для удаления карточки 
   deleteCard.addEventListener('click', Delete);
-  
+  // Прикрепляем обработчик для лайка карточки
+  likeCard.addEventListener('click', likeBtn);
+
   return element;
 };
 
 // Функция удаление карточки 
 const Delete = (event) => {
   event.target.closest('.elements__element').remove();
+};
+
+// Функция добавления лайка 
+const likeBtn = (event) => {
+  event.target.classList.toggle('elements__like_active');
 };
 
 // Попап редактирования профиля
@@ -93,7 +101,7 @@ let inputCreate = popupElementCreate.querySelector('.popup__input_create_header'
 let imageCreate = popupElementCreate.querySelector('.popup__input_create_paragraph');
 let closeButtonCreate = popupElementCreate.querySelector('.popup__close-button');
 
-// Функцция открытия попапа
+// Функция открытия попапа
 function openPopupCreate() {
   popupElementCreate.classList.add('popup_opened');
 };
@@ -123,4 +131,5 @@ formElementCreate.addEventListener('submit', formSubmitCreate);
 
 // Отрисовка карточек из массива объектов
 const elements = initialCards.map(createItem);
+// Добавление элементов карточек в контейнер
 container.append(...elements);
