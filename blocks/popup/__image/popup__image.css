@@ -4,4 +4,10 @@
   padding: 0;  
   max-width: 75vw;
   max-height: 75vh;
-};
+}
+
+@media(max-width: 880px) {
+  .popup__image {
+    max-width: 240px;
+  }
+}

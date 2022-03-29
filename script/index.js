@@ -64,7 +64,6 @@ const popupCloseButtonImage = popupElementImage.querySelector('.popup__close-but
 const popupImage = popupElementImage.querySelector('.popup__image');
 const popupImageName = popupElementImage.querySelector('.popup__paragraph-image');
 
-
 // Функция открытия попапа
 function openPopupImage(event) {
   const selectPicture = event.target;
@@ -72,14 +71,10 @@ function openPopupImage(event) {
   const name = selectPicture.getAttribute('name');
   popupImageName.textContent = name;
   popupImage.setAttribute('src', imagePath);
-  
-  // popupImage.append(image);
-
   popupElementImage.classList.add('popup_opened');
-
 };
 
-// Обработчики событий открытие и закрытия картинок
+// Обработчик закрытия картинок
 popupCloseButtonImage.addEventListener('click', closePopup);
 
 // Попап редактирования профиля
