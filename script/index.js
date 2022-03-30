@@ -78,7 +78,6 @@ const deleteCard = (event) => {
 // Функция добавления лайка 
 const likeBtn = (event) => {
   event.target.classList.toggle('elements__like_active');
-  console.log(event);
 };
 
 // Попап открытие изображения 
@@ -121,7 +120,6 @@ function handleProfileFormSubmit(evt) {
   profileTitle.textContent = inputEdit.value;// Получите значение полей jobInput и nameInput из свойства value
   profileSubtitle.textContent = jobEdit.value;
   closePopup(evt);
-  console.log(evt);
 };
 
 // Прикрепляем обработчик к форме данных профиля
