@@ -58,7 +58,7 @@ const createItem = (item) => {
   const deleteBtn = element.querySelector('.elements__trash');
   const likeCard = element.querySelector('.elements__like');
   image.setAttribute('src', item.link);
-  image.setAttribute('name', item.name);
+  image.setAttribute('alt', item.name);
   cardName.textContent = item.name;
   // Прикрепляем обработчик для удаления карточки 
   deleteBtn.addEventListener('click', deleteCard);
@@ -89,9 +89,10 @@ const popupImageName = popupElementImage.querySelector('.popup__paragraph-image'
 function openPopupImage(event) {
   const selectPicture = event.target;
   const imagePath = selectPicture.getAttribute('src')
-  const name = selectPicture.getAttribute('name');
-  popupImageName.textContent = name;
+  const altImage = selectPicture.getAttribute('alt');
+  popupImageName.textContent = altImage;
   popupImage.setAttribute('src', imagePath);
+  popupImage.setAttribute('alt', altImage);
   openPopup(popupElementImage);
 };
 
@@ -157,7 +158,13 @@ function handleCreateFormSubmit(evt) {
 };
 
 // Прикрепляем обработчик к форме создания новой карточки 
-formElementCreate.addEventListener('submit', handleCreateFormSubmit);
+formElementCreate.addEventListener('submit', (evt) => {
+  handleCreateFormSubmit(evt);
+  const inputsForm = evt.target.querySelectorAll('.popup__input');
+  inputsForm.forEach(function (element) {
+    element.value = '';
+  });
+});
 
 // Отрисовка карточек из массива объектов
 const elements = initialCards.map(createItem);
