@@ -170,3 +170,67 @@ formElementCreate.addEventListener('submit', (evt) => {
 const elements = initialCards.map(createItem);
 // Добавление элементов карточек в контейнер
 container.append(...elements);
+
+// Валидация формы "Редактировать поле"
+// функция добавляющая сообщение об ошибке
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // inputElement.classList.add('');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_active');
+};
+
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  // inputElement.classList.remove('');
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__submit');
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll('.popup__content'));
+
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement);
+  });
+};
+
+enableValidation();
+
+function hasInvalidInput(inputList) {
+  return inputList.some(function (inputElement) {
+    return !inputElement.validity.valid;
+  });
+};
+
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList) === true) {
+    buttonElement.classList.add('popup__submit_invalid');
+  }
+  else {
+    buttonElement.classList.remove('popup__submit_invalid');
+  };
+};
