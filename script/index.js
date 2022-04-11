@@ -5,11 +5,17 @@ const popups = document.querySelectorAll('.popup');
 // Функция открытия попапов
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEsc);
+  document.addEventListener('click', closeByClick);
 };
 
 // Функция закрытия попапов 
+const closePopupByPopup = (popup) => {
+  popup.classList.remove('popup_opened');
+}
+
 const closePopup = (event) => {
-  event.target.closest('.popup').classList.remove('popup_opened');
+  closePopupByPopup(event.target.closest('.popup'));
 };
 
 // Функция обрабатывания кликов по кнопкам крестиков
@@ -17,9 +23,36 @@ popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup__close-button')) {
       closePopup(evt);
-    };
+      const inputsForm = document.querySelectorAll('.popup__input')
+      clearForms(inputsForm);
+    }
   });
 });
+
+// Функция закрытия попапа нажатием на Esc
+const closeByEsc = (event) => {
+  if (event.key === "Escape") {
+    const popup = document.querySelector('.popup_opened');
+    closePopupByPopup(popup);
+    const inputsForm = document.querySelectorAll('.popup__input')
+    clearForms(inputsForm);
+    document.removeEventListener('keydown', closeByEsc);
+  };
+};
+
+// Функция закрытия попапа кликом на оверлей
+const closeByClick = (event) => {
+  if (!event.target.classList.contains('popup')) {
+    event.stopPropagation();
+  }
+  else {
+    const popup = document.querySelector('.popup_opened');
+    closePopupByPopup(popup);
+    const inputsForm = document.querySelectorAll('.popup__input')
+    clearForms(inputsForm);
+    document.removeEventListener('keydown', closeByEsc);
+  }
+};
 
 const initialCards = [
   {
@@ -47,6 +80,7 @@ const initialCards = [
     link: './img/baikal.jpg'
   }
 ];
+
 // Контейнер с карточками
 const container = document.querySelector('.elements');
 
@@ -70,7 +104,7 @@ const createItem = (item) => {
   return element;
 };
 
-// Функция удаление карточки 
+// Функция удаления карточки 
 const deleteCard = (event) => {
   event.target.closest('.elements__element').remove();
 };
@@ -80,7 +114,7 @@ const likeBtn = (event) => {
   event.target.classList.toggle('elements__like_active');
 };
 
-// Попап открытие изображения 
+// Попап открытия изображения 
 const popupElementImage = document.querySelector('.popup_type_image');
 const popupImage = popupElementImage.querySelector('.popup__image');
 const popupImageName = popupElementImage.querySelector('.popup__paragraph-image');
@@ -157,16 +191,22 @@ function handleCreateFormSubmit(evt) {
   closePopup(evt);
 };
 
-// Прикрепляем обработчик к форме создания новой карточки 
-formElementCreate.addEventListener('submit', (evt) => {
-  handleCreateFormSubmit(evt);
-  const inputsForm = evt.target.querySelectorAll('.popup__input');
+// Функция очистки строк input
+const clearForms = (inputsForm) => {
   inputsForm.forEach(function (element) {
     element.value = '';
   });
+}
+
+// Прикрепляем обработчик к форме создания новой карточки 
+formElementCreate.addEventListener('submit', (evt) => {
+  handleCreateFormSubmit(evt);
+  const inputsForm = document.querySelectorAll('.popup__input')
+  clearForms(inputsForm);
 });
 
 // Отрисовка карточек из массива объектов
 const elements = initialCards.map(createItem);
+
 // Добавление элементов карточек в контейнер
 container.append(...elements);
