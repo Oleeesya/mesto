@@ -12,6 +12,8 @@ const openPopup = (popup) => {
 // Функция закрытия попапов 
 const closePopupByPopup = (popup) => {
   popup.classList.remove('popup_opened');
+  clearValidation();
+  clearValidationBtn();
 }
 
 const closePopup = (event) => {
@@ -197,6 +199,24 @@ const clearForms = (inputsForm) => {
     element.value = '';
   });
 }
+
+// Функция очистки валидации 
+const clearValidation = () => {
+  const spans = Array.from(document.querySelectorAll('.popup__input-error'));
+  spans.forEach(function (span) {
+    console.log(spans);
+    span.textContent = '';
+  })
+};
+
+// Функция очистки валидации для кнопки
+const clearValidationBtn = () => {
+  const ValidationBtns = Array.from(document.querySelectorAll('.popup__submit'));
+  ValidationBtns.forEach(function (ValidationBtn) {
+    ValidationBtn.classList.remove('popup__submit_invalid');
+    console.log(ValidationBtn);
+  })
+};
 
 // Прикрепляем обработчик к форме создания новой карточки 
 formElementCreate.addEventListener('submit', (evt) => {
