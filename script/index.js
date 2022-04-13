@@ -6,40 +6,19 @@ const popups = document.querySelectorAll('.popup');
 const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEsc);
-  document.addEventListener('click', closeByClick);
 };
 
 // Функция закрытия попапов 
 const closePopupByPopup = (popup) => {
-  popup.classList.remove('popup_opened');
-  clearValidation();
-  clearValidationBtn();
-}
-
-const closePopup = (event) => {
-  closePopupByPopup(event.target.closest('.popup'));
-};
-
-// Функция обрабатывания кликов по кнопкам крестиков
-popups.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {
-    if (evt.target.classList.contains('popup__close-button')) {
-      closePopup(evt);
-      const inputsForm = document.querySelectorAll('.popup__input')
-      clearForms(inputsForm);
-    }
-  });
-});
-
-// Функция закрытия попапа нажатием на Esc
-const closeByEsc = (event) => {
-  if (event.key === "Escape") {
-    const popup = document.querySelector('.popup_opened');
-    closePopupByPopup(popup);
-    const inputsForm = document.querySelectorAll('.popup__input')
-    clearForms(inputsForm);
-    document.removeEventListener('keydown', closeByEsc);
-  };
+  if (popup.lastElementChild.className === 'popup__container') {
+    const form = popup.querySelector('.popup__content');
+    clearForm(form);
+    popup.classList.remove('popup_opened');
+  }
+  else {
+    popup.classList.remove('popup_opened');
+  }
+  document.removeEventListener('keydown', closeByEsc);
 };
 
 // Функция закрытия попапа кликом на оверлей
@@ -47,13 +26,49 @@ const closeByClick = (event) => {
   if (!event.target.classList.contains('popup')) {
     event.stopPropagation();
   }
-  else {
-    const popup = document.querySelector('.popup_opened');
-    closePopupByPopup(popup);
-    const inputsForm = document.querySelectorAll('.popup__input')
-    clearForms(inputsForm);
-    document.removeEventListener('keydown', closeByEsc);
+  else if (event.target.classList.contains('popup_opened')) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopupByPopup(openedPopup);
   }
+};
+
+// Функция отчистки формы
+const clearForm = (form) => {
+  form.reset();
+  const inputsForm = form.querySelectorAll('.popup__input');
+  inputsForm.forEach((inputForm) => {
+    inputForm.classList.remove('popup__input_error');
+  });
+  const spans = form.querySelectorAll('.popup__input-error');
+  spans.forEach((span) => {
+    span.textContent = '';
+  });
+  const btnSubmit = form.querySelector('.popup__submit');
+  if (btnSubmit.getAttribute('default_state') == 'enabled') {
+    btnSubmit.removeAttribute('disabled', 'disabled');
+  }
+  else if (btnSubmit.getAttribute('default_state') == 'disabled') {
+    btnSubmit.setAttribute('disabled', 'disabled');
+  }
+};
+
+// Функция обрабатывания кликов по кнопкам крестиков
+const closePopup = (event) => {
+  closePopupByPopup(event.target.closest('.popup'));
+};
+
+popups.forEach((popup) => {
+  const closeBtn = popup.querySelector('.popup__close-button');
+  closeBtn.addEventListener('click', closePopup);
+  popup.addEventListener('click', closeByClick);
+});
+
+// Функция закрытия попапа нажатием на Esc
+const closeByEsc = (event) => {
+  if (event.key === "Escape") {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopupByPopup(openedPopup);
+  };
 };
 
 const initialCards = [
@@ -101,7 +116,7 @@ const createItem = (item) => {
   // Прикрепляем обработчик для лайка карточки
   likeCard.addEventListener('click', likeBtn);
   // Прикрепляем обработчик на открытие картинки
-  image.addEventListener('click', openPopupImage);
+  image.addEventListener('click', () => openPopupImage(item));
 
   return element;
 };
@@ -121,14 +136,11 @@ const popupElementImage = document.querySelector('.popup_type_image');
 const popupImage = popupElementImage.querySelector('.popup__image');
 const popupImageName = popupElementImage.querySelector('.popup__paragraph-image');
 
-// Функция открытия попапа
-function openPopupImage(event) {
-  const selectPicture = event.target;
-  const imagePath = selectPicture.getAttribute('src')
-  const altImage = selectPicture.getAttribute('alt');
-  popupImageName.textContent = altImage;
-  popupImage.setAttribute('src', imagePath);
-  popupImage.setAttribute('alt', altImage);
+// Функция открытия попапа изображения
+function openPopupImage(item) {
+  popupImageName.textContent = item.name;
+  popupImage.setAttribute('src', item.link);
+  popupImage.setAttribute('alt', item.name);
   openPopup(popupElementImage);
 };
 
@@ -143,9 +155,9 @@ const profileSubtitle = document.querySelector('.profile__subtitle');
 
 // Функция редактирования профиля
 function openPopupEdit() {
-  openPopup(popupElementEdit);
   inputEdit.value = profileTitle.textContent;
   jobEdit.value = profileSubtitle.textContent;
+  openPopup(popupElementEdit);
 };
 
 // Обработчики событий открытие и закрытие попапа для профиля
@@ -153,10 +165,11 @@ editButton.addEventListener('click', openPopupEdit);
 
 // Функция сохранения данных профиля
 function handleProfileFormSubmit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.                                          
-  profileTitle.textContent = inputEdit.value;// Получите значение полей jobInput и nameInput из свойства value
+  evt.preventDefault();
+  profileTitle.textContent = inputEdit.value;
   profileSubtitle.textContent = jobEdit.value;
   closePopup(evt);
+  formElementEdit.reset();
 };
 
 // Прикрепляем обработчик к форме данных профиля
@@ -169,7 +182,7 @@ const createButton = document.querySelector('.profile__add-button');
 const inputCreate = popupElementCreate.querySelector('.popup__input_create_header');
 const imageCreate = popupElementCreate.querySelector('.popup__input_create_paragraph');
 
-// Функция открытия попапа
+// Функция открытия попапа добавления новой карточки
 function openPopupCreate() {
   openPopup(popupElementCreate);
 };
@@ -193,36 +206,10 @@ function handleCreateFormSubmit(evt) {
   closePopup(evt);
 };
 
-// Функция очистки строк input
-const clearForms = (inputsForm) => {
-  inputsForm.forEach(function (element) {
-    element.value = '';
-  });
-}
-
-// Функция очистки валидации 
-const clearValidation = () => {
-  const spans = Array.from(document.querySelectorAll('.popup__input-error'));
-  spans.forEach(function (span) {
-    console.log(spans);
-    span.textContent = '';
-  })
-};
-
-// Функция очистки валидации для кнопки
-const clearValidationBtn = () => {
-  const ValidationBtns = Array.from(document.querySelectorAll('.popup__submit'));
-  ValidationBtns.forEach(function (ValidationBtn) {
-    ValidationBtn.classList.remove('popup__submit_invalid');
-    console.log(ValidationBtn);
-  })
-};
-
 // Прикрепляем обработчик к форме создания новой карточки 
 formElementCreate.addEventListener('submit', (evt) => {
   handleCreateFormSubmit(evt);
-  const inputsForm = document.querySelectorAll('.popup__input')
-  clearForms(inputsForm);
+  formElementCreate.reset();
 });
 
 // Отрисовка карточек из массива объектов

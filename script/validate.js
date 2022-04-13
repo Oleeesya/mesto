@@ -2,8 +2,8 @@
 const validationConfig = {
   formSelector: '.popup__content',
   inputSelector: '.popup__input',
+  inputSelectorError: 'popup__input_error',
   submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_invalid',
   errorClass: 'popup__input-error_active'
 };
 
@@ -12,6 +12,7 @@ const showInputError = (formElement, inputElement, errorMessage, validationConfi
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(validationConfig.errorClass);
+  inputElement.classList.add(validationConfig.inputSelectorError);
 };
 
 // Удаление сообщения об ошибке
@@ -19,13 +20,15 @@ const hideInputError = (formElement, inputElement, validationConfig) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   errorElement.classList.remove(validationConfig.errorClass);
   errorElement.textContent = '';
+  inputElement.classList.remove(validationConfig.inputSelectorError);
 };
 
 // Проверка валидации input
 const checkInputValidity = (formElement, inputElement, validationConfig) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, validationConfig);
-  } else {
+  }
+  else {
     hideInputError(formElement, inputElement, validationConfig);
   }
 };
@@ -63,11 +66,11 @@ function hasInvalidInput(inputList) {
 };
 
 // Функция стилизации кнопки 
-function toggleButtonState(inputList, buttonElement, validationConfig) {
+function toggleButtonState(inputList, buttonElement) {
   if (hasInvalidInput(inputList) === true) {
-    buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    buttonElement.setAttribute('disabled', 'disabled');
   }
   else {
-    buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-  };
+    buttonElement.removeAttribute('disabled', 'disabled');
+  }
 };

@@ -13,9 +13,13 @@
   margin-top: 21px;
 }
 
-.popup__submit:hover {
+.popup__submit:not([disabled]):hover {
   opacity: 0.8;
   cursor: pointer;
+}
+
+.popup__submit:disabled {
+  background: #E5E5E5;
 }
 
 @media(max-width: 880px) {
