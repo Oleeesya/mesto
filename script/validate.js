@@ -71,6 +71,17 @@ function toggleButtonState(inputList, buttonElement) {
     buttonElement.setAttribute('disabled', 'disabled');
   }
   else {
-    buttonElement.removeAttribute('disabled', 'disabled');
+    buttonElement.removeAttribute('disabled');
   }
+};
+
+// Отчистка формы при открытии попапа
+const clearForm = (form, validationConfig) => {
+  const inputsForm = form.querySelectorAll(validationConfig.inputSelector);
+  const inputList = Array.from(form.querySelectorAll(validationConfig.inputSelector));
+  const buttonElement = form.querySelector(validationConfig.submitButtonSelector);
+  inputsForm.forEach((inputForm) => {
+    hideInputError(form, inputForm, validationConfig);
+  });
+  toggleButtonState(inputList, buttonElement);
 };

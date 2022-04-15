@@ -20,6 +20,8 @@
 
 .popup__submit:disabled {
   background: #E5E5E5;
+  border: 1px solid #000000;
+  color: #000000;
 }
 
 @media(max-width: 880px) {
