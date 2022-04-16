@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 14px 124px 18px 125px;
-  width: 358px;
+  max-width: 358px;
   height: 50px;
   background-color: #000;
   font-weight: 400;
