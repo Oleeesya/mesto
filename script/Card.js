@@ -1,6 +1,5 @@
-import {
-    initialCards, popupImage, popupCloseButton, popupElementImage, popupImageName
-} from './initial.js';
+import { popupImage, popupElementImage, popupImageName } from './initial.js';
+import { openPopup } from './index.js';
 
 export class Card {
     constructor(initialCards, cardSelector) {
@@ -22,26 +21,10 @@ export class Card {
         this._likeBtn = this._element.querySelector('.elements__like');
         this._element.querySelector('.elements__title').textContent = this._title;
         this._img.src = this._link;
+        this._img.alt = this._title;
         this._setEventListeners();
 
         return this._element;
-    };
-
-    //метод закрытия по кнопке esc
-    _closeByEsc = (event) => {
-        if (event.key === "Escape") {
-            this._handleClosePopup();
-        }
-    };
-
-    // закрытие оверлей
-    _closeByOverlay = (event) => {
-        if (!event.target.classList.contains('popup_opened')) {
-            event.stopPropagation();
-        }
-        else {
-            this._handleClosePopup();
-        }
     };
 
     //открытие попапа
@@ -49,33 +32,13 @@ export class Card {
         popupImageName.textContent = this._title;
         popupImage.setAttribute('src', this._link);
         popupImage.setAttribute('alt', this._title);
-        popupElementImage.classList.add('popup_opened');
-        document.addEventListener('keydown', this._closeByEsc);
-    };
-
-    // закрытие попапа
-    _handleClosePopup() {
-        if (popupElementImage.classList.contains('popup_opened')) {
-            popupImageName.textContent = '';
-            popupImage.removeAttribute('src');
-            popupImage.removeAttribute('alt');
-            popupElementImage.classList.remove('popup_opened');
-            document.removeEventListener('keydown', this._closeByEsc);
-        }
+        openPopup(popupElementImage);
     };
 
     _setEventListeners() {
         this._img.addEventListener('click', () => {
             this._handleOpenPopup();
         });
-
-        // Закрытие на кнопку
-        popupCloseButton.addEventListener('click', () => {
-            this._handleClosePopup();
-        });
-
-        // Закрытие на оверлей
-        popupElementImage.addEventListener('click', this._closeByOverlay)
 
         // Удаление карточки
         this._deleteBtn.addEventListener('click', () => {
@@ -88,9 +51,3 @@ export class Card {
         })
     };
 };
-
-initialCards.forEach((item) => {
-    const card = new Card(item, '#template-element');
-    const cardElement = card.generateCard();
-    document.querySelector('.elements').append(cardElement);
-});

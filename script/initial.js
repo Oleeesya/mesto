@@ -25,10 +25,8 @@ export const initialCards = [
     }
 ];
 
-export const popupElement = document.querySelector('.popup');
 export const popupImage = document.querySelector('.popup__image');
 export const popupElementImage = document.querySelector('.popup_type_image');
-export const popupCloseButton = popupElementImage.querySelector('.popup__close-button');
 export const popupImageName = popupElementImage.querySelector('.popup__paragraph-image');
 
 export const validationConfig = {

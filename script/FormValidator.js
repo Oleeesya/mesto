@@ -2,6 +2,8 @@ export class FormValidator {
     constructor(validationConfig, formElement) {
         this._validationConfig = validationConfig;
         this._formElement = formElement;
+        this._inputList = Array.from(this._formElement.querySelectorAll(this._validationConfig.inputSelector));
+        this._buttonElement = this._formElement.querySelector(this._validationConfig.submitButtonSelector);
     }
     // Добавление сообщения об ошибке
     _showInputError(inputElement, errorMessage) {
@@ -31,12 +33,10 @@ export class FormValidator {
 
     // Обработчик событий input
     _setEventListeners() {
-        const inputList = Array.from(this._formElement.querySelectorAll(this._validationConfig.inputSelector));
-        const buttonElement = this._formElement.querySelector(this._validationConfig.submitButtonSelector);
-        inputList.forEach((inputElement) => {
+        this._inputList.forEach((inputElement) => {
             inputElement.addEventListener('input', () => {
                 this._checkInputValidity(inputElement);
-                this._toggleButtonState(inputList, buttonElement);
+                this._toggleButtonState();
             });
         });
     };
@@ -50,31 +50,27 @@ export class FormValidator {
     };
 
     //  Функция проверки форм
-    _hasInvalidInput(inputList) {
-        return inputList.some(function (inputElement) {
+    _hasInvalidInput() {
+        return this._inputList.some(function (inputElement) {
             return !inputElement.validity.valid;
         });
     };
 
     // Функция стилизации кнопки 
-    _toggleButtonState(inputList, buttonElement) {
-        if (this._hasInvalidInput(inputList) === true) {
-            buttonElement.setAttribute('disabled', 'disabled');
+    _toggleButtonState() {
+        if (this._hasInvalidInput() === true) {
+            this._buttonElement.setAttribute('disabled', 'disabled');
         }
         else {
-            buttonElement.removeAttribute('disabled');
+            this._buttonElement.removeAttribute('disabled');
         }
     };
 
     // Отчистка формы при открытии попапа
     clearForm() {
-        const inputsForm = this._formElement.querySelectorAll(this._validationConfig.inputSelector);
-        const inputList = Array.from(this._formElement.querySelectorAll(this._validationConfig.inputSelector));
-        const buttonElement = this._formElement.querySelector(this._validationConfig.submitButtonSelector);
-        inputsForm.forEach((inputForm) => {
+        this._inputList.forEach((inputForm) => {
             this._hideInputError(inputForm);
         });
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState();
     };
-
 };
