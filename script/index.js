@@ -1,3 +1,4 @@
+import { Section } from './Section.js'
 import { Card } from './Card.js'
 import { FormValidator } from './FormValidator.js'
 import { validationConfig, initialCards } from './initial.js';
@@ -92,17 +93,21 @@ const newCard = (name, link) => {
     name: name,
     link: link
   };
-  const element = generateCards(item);
-  elements.prepend(element);
+  cardSection.renderItem([item]);
 };
 
 // Функция генерации разметки карточки
-const generateCards = (item) => {
-  const card = new Card(item, '#template-element');
-  const cardElement = card.generateCard();
+const cardSection = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '#template-element');
+    const cardElement = card.generateCard();
+    return cardElement;
+  }
+},
+  '.elements');
 
-  return cardElement;
-}
+cardSection.renderItem(initialCards);
 
 // Функция отправки данных для новой карточки
 function handleCreateFormSubmit(evt) {
@@ -123,9 +128,3 @@ formProfileValidator.enableValidation();
 // Создание экземпляра валидатора добавления новой карточки через класс FormValidator
 const formAddCreat = new FormValidator(validationConfig, formElementCreate);
 formAddCreat.enableValidation();
-
-// Создание экземпляра карточек через класса Card
-initialCards.forEach((item) => {
-  const element = generateCards(item);
-  elements.append(element);
-});
