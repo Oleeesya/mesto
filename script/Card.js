@@ -1,5 +1,9 @@
-import { popupImage, popupElementImage, popupImageName } from './initial.js';
-import { openPopup } from './index.js';
+// import { popupImage, popupElementImage, popupImageName } from './initial.js';
+// import { openPopup } from './index.js';
+
+import { PopupWithImage } from './PopupWithImage.js';
+
+const popupWithImage = new PopupWithImage('.popup');
 
 export class Card {
     constructor(initialCards, cardSelector) {
@@ -27,17 +31,9 @@ export class Card {
         return this._element;
     };
 
-    //открытие попапа
-    _handleOpenPopup() {
-        popupImageName.textContent = this._title;
-        popupImage.setAttribute('src', this._link);
-        popupImage.setAttribute('alt', this._title);
-        openPopup(popupElementImage);
-    };
-
     _setEventListeners() {
         this._img.addEventListener('click', () => {
-            this._handleOpenPopup();
+            popupWithImage.open(this._img);
         });
 
         // Удаление карточки

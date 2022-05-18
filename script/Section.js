@@ -1,6 +1,6 @@
 export class Section {
-    constructor(data, selector) {
-        this._cardContainer = document.querySelector(selector);
+    constructor(data, selectorCard) {
+        this._cardContainer = document.querySelector(selectorCard);
         this._items = data.items;
         this._renderer = data.renderer;
     }

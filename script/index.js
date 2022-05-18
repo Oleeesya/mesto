@@ -1,39 +1,47 @@
-import { Section } from './Section.js'
 import { Card } from './Card.js'
+import { Section } from './Section.js'
+import { Popup } from './Popup.js'
 import { FormValidator } from './FormValidator.js'
 import { validationConfig, initialCards } from './initial.js';
 
 const popups = document.querySelectorAll('.popup');
-const elements = document.querySelector('.elements');
 
-// Функция открытия попапов
-export const openPopup = (popup) => {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closeByEsc);
-};
+const popup = new Popup('.popup');
 
-// Функция закрытия попапов 
-const closePopupByPopup = (popup) => {
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeByEsc);
-};
+popups.forEach((p) => {
+  popup.setEventListeners(p);
+})
 
-// Обработчики событий для закрытия попапов
-popups.forEach((popup) => {
-  popup.addEventListener('click', (event) => {
-    if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup')) {
-      closePopupByPopup(popup);
-    }
-  });
-});
 
-// Функция закрытия попапа нажатием на Esc
-const closeByEsc = (event) => {
-  if (event.key === "Escape") {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopupByPopup(openedPopup);
-  };
-};
+// const popups = document.querySelectorAll('.popup');
+// // Функция открытия попапов
+// export const openPopup = (popup) => {
+//   popup.classList.add('popup_opened');
+//   document.addEventListener('keydown', closeByEsc);
+// };
+
+// // Функция закрытия попапов 
+// const closePopupByPopup = (popup) => {
+//   popup.classList.remove('popup_opened');
+//   document.removeEventListener('keydown', closeByEsc);
+// };
+
+// // Обработчики событий для закрытия попапов
+// popups.forEach((popup) => {
+//   popup.addEventListener('click', (event) => {
+//     if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup')) {
+//       closePopupByPopup(popup);
+//     }
+//   });
+// });
+
+// // Функция закрытия попапа нажатием на Esc
+// const closeByEsc = (event) => {
+//   if (event.key === "Escape") {
+//     const openedPopup = document.querySelector('.popup_opened');
+//     closePopupByPopup(openedPopup);
+//   };
+// };
 
 // Попап редактирования профиля
 const popupElementEdit = document.querySelector('.popup_type_edit');
@@ -50,8 +58,8 @@ function openPopupEdit() {
   jobEdit.value = profileSubtitle.textContent;
 
   formProfileValidator.clearForm();
-
-  openPopup(popupElementEdit);
+  popup.open(popupElementEdit);
+  // openPopup(popupElementEdit);
 };
 
 // Обработчики событий открытие и закрытие попапа для профиля
@@ -62,7 +70,9 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = inputEdit.value;
   profileSubtitle.textContent = jobEdit.value;
-  closePopupByPopup(popupElementEdit);
+
+  popup.close(popupElementEdit)
+  // closePopupByPopup(popupElementEdit);
 };
 
 // Прикрепляем обработчик к форме данных профиля
@@ -81,7 +91,8 @@ function openPopupCreate() {
 
   formAddCreat.clearForm();
 
-  openPopup(popupElementCreate);
+  popup.open(popupElementCreate);
+  // openPopup(popupElementCreate);
 };
 
 // Обработчики событий открытие и закрытие попапа для новых карточек
@@ -113,7 +124,9 @@ cardSection.renderItem(initialCards);
 function handleCreateFormSubmit(evt) {
   evt.preventDefault();
   newCard(inputCreate.value, imageCreate.value);
-  closePopupByPopup(popupElementCreate);
+
+  popup.close(popupElementCreate)
+  // closePopupByPopup(popupElementCreate);
 };
 
 // Прикрепляем обработчик к форме создания новой карточки 
