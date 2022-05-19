@@ -4,13 +4,11 @@ export class Popup {
     }
     //открытие попапа
     open(popup) {
-        console.log(popup)
         popup.classList.add('popup_opened');
         document.addEventListener('keydown', this._handleEscClose);
     }
     //закрытие попапа
     close(popup) {
-        console.log(popup)
         popup.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose);
     }

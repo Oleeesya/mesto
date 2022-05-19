@@ -1,9 +1,12 @@
-// import { popupImage, popupElementImage, popupImageName } from './initial.js';
+import { popupElementImage } from './initial.js';
 // import { openPopup } from './index.js';
 
 import { PopupWithImage } from './PopupWithImage.js';
 
-const popupWithImage = new PopupWithImage('.popup');
+const popupWithImage = new PopupWithImage('.popup__image');
+
+popupWithImage.setEventListeners(popupElementImage);
+
 
 export class Card {
     constructor(initialCards, cardSelector) {
