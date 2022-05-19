@@ -2,6 +2,9 @@ import { popupImage, popupElementImage, popupImageName } from './initial.js';
 import { Popup } from './Popup.js'
 
 export class PopupWithImage extends Popup {
+    constructor(selectorPopup) {
+        super(selectorPopup);
+    }
     open(img) {
         popupImageName.textContent = img.alt;
         popupImage.setAttribute('src', img.src);

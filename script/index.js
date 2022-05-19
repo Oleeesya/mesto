@@ -3,8 +3,9 @@ import { Section } from './Section.js'
 import { Popup } from './Popup.js'
 import { PopupWithForm } from './PopupWithForm.js'
 import { PopupWithImage } from './PopupWithImage.js'
+import { UserInfo } from './UserInfo.js'
 import { FormValidator } from './FormValidator.js'
-import { validationConfig, initialCards } from './initial.js';
+import { validationConfig, initialCards, profileTitle, profileSubtitle, popupElementImage } from './initial.js';
 
 // const popups = document.querySelectorAll('.popup');
 
@@ -19,15 +20,13 @@ import { validationConfig, initialCards } from './initial.js';
 const popupElementEdit = document.querySelector('.popup_type_edit');
 const editButton = document.querySelector('.profile__edit-button');
 const formElementEdit = popupElementEdit.querySelector('.popup__content_name_edit');
-const inputEdit = document.querySelector('.popup__input_edit_header');
-const jobEdit = document.querySelector('.popup__input_edit_paragraph');
-const profileTitle = document.querySelector('.profile__title');
-const profileSubtitle = document.querySelector('.profile__subtitle');
 
 const popupWithFormEdit = new PopupWithForm('.popup_type_edit', (evt) => {
   evt.preventDefault();
-  profileTitle.textContent = inputEdit.value;
-  profileSubtitle.textContent = jobEdit.value;
+  const user = userInfo.getUserInfo();
+  console.log(user)
+  profileTitle.textContent = user.name;
+  profileSubtitle.textContent = user.info;
   popupWithFormEdit.close(popupElementEdit);
 });
 
@@ -35,8 +34,7 @@ popupWithFormEdit.setEventListeners(popupElementEdit);
 
 // Функция редактирования профиля
 function openPopupEdit() {
-  inputEdit.value = profileTitle.textContent;
-  jobEdit.value = profileSubtitle.textContent;
+  userInfo.setUserInfo(profileTitle.textContent, profileSubtitle.textContent);
   formProfileValidator.clearForm();
   popupWithFormEdit.open(popupElementEdit);
 };
@@ -76,11 +74,15 @@ const newCard = (name, link) => {
   cardSection.renderItem([item]);
 };
 
+const popupWithImage = new PopupWithImage('.popup__image');
+popupWithImage.setEventListeners(popupElementImage);
+
+
 // Функция генерации разметки карточки
 const cardSection = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#template-element');
+    const card = new Card(item, '#template-element', popupWithImage.open);
     const cardElement = card.generateCard();
     return cardElement;
   }
@@ -107,3 +109,6 @@ formProfileValidator.enableValidation();
 // --- Создание экземпляра валидатора добавления новой карточки через класс FormValidator ---
 const formAddCreat = new FormValidator(validationConfig, formElementCreate);
 formAddCreat.enableValidation();
+
+// --- Создание экземпляра класса отображения информации на странице --- 
+const userInfo = new UserInfo({ name: ".popup__input_edit_header", info: ".popup__input_edit_paragraph" });

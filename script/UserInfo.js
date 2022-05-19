@@ -1,12 +1,13 @@
 export class UserInfo {
     constructor(userItems) {
-        this._nameUser = userItems.name;
-        this._infoUser = userItems.info;
+        this._nameUser = document.querySelector(userItems.name);
+        this._infoUser = document.querySelector(userItems.info);
     }
     getUserInfo() {
-        
+        return { name: this._nameUser.value, info: this._infoUser.value };
     }
-    setUserInfo() {
-
+    setUserInfo(name, info) {
+        this._nameUser.value = name;
+        this._infoUser.value = info;
     }
 }

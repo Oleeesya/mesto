@@ -28,6 +28,10 @@ export const initialCards = [
 export const popupImage = document.querySelector('.popup__image');
 export const popupElementImage = document.querySelector('.popup_type_image');
 export const popupImageName = popupElementImage.querySelector('.popup__paragraph-image');
+export const inputEdit = document.querySelector('.popup__input_edit_header');
+export const jobEdit = document.querySelector('.popup__input_edit_paragraph');
+export const profileTitle = document.querySelector('.profile__title');
+export const profileSubtitle = document.querySelector('.profile__subtitle');
 
 export const validationConfig = {
     formSelector: '.popup__content',

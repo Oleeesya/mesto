@@ -8,12 +8,13 @@ export class PopupWithForm extends Popup {
     }
     _getInputValues() {
         const arrayInput = document.querySelector(selectorPopup).querySelectorAll('.popup__input');
+        return arrayInput
     }
     //слушатели клика закрытия попапа и обработчик создания новой формы
     setEventListeners(popup) {
         super.setEventListeners(popup);
-        this._popupElement.addEventListener('submit', this._functionForm);
-        
+        this._popupElement.addEventListener('submit', this._functionForm(this._getInputValues()));
+
     }
     //закрытие попапа и сброс формы при закрытии попапа
     close(popup) {
