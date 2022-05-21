@@ -1,11 +1,11 @@
-import { Card } from './Card.js'
-import { Section } from './Section.js'
-import { PopupWithForm } from './PopupWithForm.js'
-import { PopupWithImage } from './PopupWithImage.js'
-import { UserInfo } from './UserInfo.js'
-import { FormValidator } from './FormValidator.js'
-import { validationConfig, jobEdit, inputEdit, initialCards } from './initial.js';
-import './pages/index.css'; // добавьте импорт главного файла стилей 
+import { Card } from '../components/Card.js'
+import { Section } from '../components/Section.js'
+import { PopupWithForm } from '../components/PopupWithForm.js'
+import { PopupWithImage } from '../components/PopupWithImage.js'
+import { UserInfo } from '../components/UserInfo.js'
+import { FormValidator } from '../components/FormValidator.js'
+import { validationConfig, jobEdit, inputEdit, initialCards } from '../components/initial.js';
+import './index.css'; // добавьте импорт главного файла стилей 
 
 
 // --- Попап редактирования профиля ---
@@ -40,13 +40,12 @@ editButton.addEventListener('click', openPopupEdit);
 const popupElementCreate = document.querySelector('.popup_type_create');
 const formElementCreate = popupElementCreate.querySelector('.popup__content_name_create');
 const createButton = document.querySelector('.profile__add-button');
-const inputCreate = popupElementCreate.querySelector('.popup__input_create_header');
-const imageCreate = popupElementCreate.querySelector('.popup__input_create_paragraph');
 
 // создание экземпляра класса PopupWithForm - popupWithFormCreate
 const popupWithFormCreate = new PopupWithForm('.popup_type_create',
   {
-    handleFormSubmit: () => {
+    handleFormSubmit: (formData) => {
+      newCard(formData);
       popupWithFormCreate.close();
     }
   }
@@ -64,10 +63,10 @@ function openPopupCreate() {
 createButton.addEventListener('click', openPopupCreate);
 
 // Функция добавления новой карточки
-const newCard = (name, link) => {
+const newCard = (formData) => {
   const item = {
-    name: name,
-    link: link
+    name: formData.title,
+    link: formData.url
   };
   cardSection.renderItem([item]);
 };
@@ -88,17 +87,6 @@ const cardSection = new Section({
   '.elements');
 
 cardSection.renderItem(initialCards);
-
-// Функция отправки данных для новой карточки
-function handleCreateFormSubmit(evt) {
-  evt.preventDefault();
-  newCard(inputCreate.value, imageCreate.value);
-};
-
-// Прикрепляем обработчик к форме создания новой карточки 
-formElementCreate.addEventListener('submit', (evt) => {
-  handleCreateFormSubmit(evt);
-});
 
 // --- Создание экземпляра валидатора редактирования профиля через класс FormValidator ---
 const formProfileValidator = new FormValidator(validationConfig, formElementEdit);

@@ -15,8 +15,7 @@ export class Popup {
     //закрытие попапа клавишей esc
     _handleEscClose = (event) => {
         if (event.key === "Escape") {
-            const openedPopup = document.querySelector('.popup_opened');
-            this.close(openedPopup);
+            this.close(this._popupElement);
         };
     }
     //слушатели клика закрытия попапа

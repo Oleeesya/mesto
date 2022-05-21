@@ -5,12 +5,12 @@ export class PopupWithForm extends Popup {
         super(selectorPopup);
         this._handleFormSubmit = handleFormSubmit;
         this._popupElement = document.querySelector(selectorPopup);
+        this._inputList = this._popupElement.querySelectorAll('.popup__input');
+        this._popupForm = this._popupElement.querySelector('.popup__content');
     }
     _getInputValues() {
-        this._inputList = this._popupElement.querySelectorAll('.popup__input');
         this._formValues = {};
         this._inputList.forEach((input) => {
-
             this._formValues[input.name] = input.value;
         })
 
@@ -29,6 +29,6 @@ export class PopupWithForm extends Popup {
     //закрытие попапа и сброс формы при закрытии попапа
     close() {
         super.close(this._popupElement);
-        this._popupElement.querySelector('.popup__content').reset();
+        this._popupForm.reset();
     }
 }
