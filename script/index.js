@@ -1,19 +1,10 @@
 import { Card } from './Card.js'
 import { Section } from './Section.js'
-import { Popup } from './Popup.js'
 import { PopupWithForm } from './PopupWithForm.js'
 import { PopupWithImage } from './PopupWithImage.js'
 import { UserInfo } from './UserInfo.js'
 import { FormValidator } from './FormValidator.js'
-import { validationConfig, initialCards, profileTitle, profileSubtitle, popupElementImage } from './initial.js';
-
-// const popups = document.querySelectorAll('.popup');
-
-// const popup = new Popup('.popup');
-
-// popups.forEach((p) => {
-//   popup.setEventListeners(p);
-// })
+import { validationConfig, initialCards, jobEdit, inputEdit, popupElementImage } from './initial.js';
 
 
 // --- Попап редактирования профиля ---
@@ -21,22 +12,24 @@ const popupElementEdit = document.querySelector('.popup_type_edit');
 const editButton = document.querySelector('.profile__edit-button');
 const formElementEdit = popupElementEdit.querySelector('.popup__content_name_edit');
 
-const popupWithFormEdit = new PopupWithForm('.popup_type_edit', (evt) => {
-  evt.preventDefault();
-  const user = userInfo.getUserInfo();
-  console.log(user)
-  profileTitle.textContent = user.name;
-  profileSubtitle.textContent = user.info;
-  popupWithFormEdit.close(popupElementEdit);
-});
+// создание экземпляра класса PopupWithForm - popupWithFormEdit
+const popupWithFormEdit = new PopupWithForm('.popup_type_edit',
+  {
+    handleFormSubmit: (formData) => {
+      userInfo.setUserInfo(formData);
+      popupWithFormEdit.close();
+    }
+  }
+);
 
-popupWithFormEdit.setEventListeners(popupElementEdit);
+popupWithFormEdit.setEventListeners();
 
 // Функция редактирования профиля
 function openPopupEdit() {
-  userInfo.setUserInfo(profileTitle.textContent, profileSubtitle.textContent);
+  inputEdit.value = userInfo.getUserInfo().name;
+  jobEdit.value = userInfo.getUserInfo().info;
   formProfileValidator.clearForm();
-  popupWithFormEdit.open(popupElementEdit);
+  popupWithFormEdit.open();
 };
 
 // Обработчики событий открытие и закрытие попапа для профиля
@@ -49,14 +42,18 @@ const createButton = document.querySelector('.profile__add-button');
 const inputCreate = popupElementCreate.querySelector('.popup__input_create_header');
 const imageCreate = popupElementCreate.querySelector('.popup__input_create_paragraph');
 
-const popupWithFormCreate = new PopupWithForm('.popup_type_create', (evt) => {
-  evt.preventDefault();
-  popupWithFormCreate.close(popupElementCreate);
-});
+// создание экземпляра класса PopupWithForm - popupWithFormCreate
+const popupWithFormCreate = new PopupWithForm('.popup_type_create',
+  {
+    handleFormSubmit: () => {
+      popupWithFormCreate.close();
+    }
+  }
+);
 
-popupWithFormCreate.setEventListeners(popupElementCreate);
+popupWithFormCreate.setEventListeners();
 
-// Функция открытия попапа добавления новой карточки
+// --- Функция открытия попапа добавления новой карточки ---
 function openPopupCreate() {
   formAddCreat.clearForm();
   popupWithFormCreate.open(popupElementCreate);
@@ -74,8 +71,8 @@ const newCard = (name, link) => {
   cardSection.renderItem([item]);
 };
 
-const popupWithImage = new PopupWithImage('.popup__image');
-popupWithImage.setEventListeners(popupElementImage);
+const popupWithImage = new PopupWithImage('.popup_type_image');
+popupWithImage.setEventListeners();
 
 
 // Функция генерации разметки карточки
@@ -110,5 +107,5 @@ formProfileValidator.enableValidation();
 const formAddCreat = new FormValidator(validationConfig, formElementCreate);
 formAddCreat.enableValidation();
 
-// --- Создание экземпляра класса отображения информации на странице --- 
-const userInfo = new UserInfo({ name: ".popup__input_edit_header", info: ".popup__input_edit_paragraph" });
+// --- Создание экземпляра класса отображения информации на странице ---
+const userInfo = new UserInfo({ name: ".profile__title", info: ".profile__subtitle" });

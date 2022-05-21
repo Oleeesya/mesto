@@ -1,9 +1,3 @@
-// import { popupElementImage } from './initial.js';
-// import { PopupWithImage } from './PopupWithImage.js';
-
-// const popupWithImage = new PopupWithImage('.popup__image');
-// popupWithImage.setEventListeners(popupElementImage);
-
 export class Card {
     constructor(initialCards, cardSelector, handleCardClick) {
         this._title = initialCards.name;
@@ -32,6 +26,7 @@ export class Card {
     };
 
     _setEventListeners() {
+        // Открытие попапа с картинкой при клике на карточку
         this._img.addEventListener('click', () => {
             this._handleCardClick(this._img);
         });

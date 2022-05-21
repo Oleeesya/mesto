@@ -3,13 +3,13 @@ export class Popup {
         this._popupElement = document.querySelector(selectorPopup);
     }
     //открытие попапа
-    open(popup) {
-        popup.classList.add('popup_opened');
+    open() {
+        this._popupElement.classList.add('popup_opened');
         document.addEventListener('keydown', this._handleEscClose);
     }
     //закрытие попапа
-    close(popup) {
-        popup.classList.remove('popup_opened');
+    close() {
+        this._popupElement.classList.remove('popup_opened');
         document.removeEventListener('keydown', this._handleEscClose);
     }
     //закрытие попапа клавишей esc
@@ -20,10 +20,10 @@ export class Popup {
         };
     }
     //слушатели клика закрытия попапа
-    setEventListeners(popup) {
-        popup.addEventListener('click', (event) => {
+    setEventListeners() {
+        this._popupElement.addEventListener('click', (event) => {
             if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup')) {
-                this.close(popup);
+                this.close(this._popupElement);
             }
         });
     }
