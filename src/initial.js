@@ -1,27 +1,37 @@
+// теперь картинки можно импортировать,
+// вебпак добавит в переменные правильные пути
+const arkhyz = new URL('./img/arkhyz.jpg', import.meta.url);
+const moscow = new URL('./img/Moscow.jpg', import.meta.url);
+const rostov = new URL('./img/Rostov-region.jpg', import.meta.url)
+
+const saintpetersburg = new URL('./img/Saint-Petersburg.jpg', import.meta.url);
+const chelyabinskoblast = new URL('./img/chelyabinsk-oblast.jpg', import.meta.url);
+const baikal = new URL('./img/baikal.jpg', import.meta.url)
+
 export const initialCards = [
     {
         name: 'Архыз',
-        link: './img/arkhyz.jpg'
+        link: arkhyz
     },
     {
         name: 'Москва',
-        link: './img/Moscow.jpg'
+        link: moscow
     },
     {
         name: 'Ростовская область',
-        link: './img/Rostov-region.jpg'
+        link: rostov
     },
     {
         name: 'Санкт-Петербург',
-        link: './img/Saint-Petersburg.jpg'
+        link: saintpetersburg
     },
     {
         name: 'Челябинская область',
-        link: './img/chelyabinsk-oblast.jpg'
+        link: chelyabinskoblast
     },
     {
         name: 'Байкал',
-        link: './img/baikal.jpg'
+        link: baikal
     }
 ];
 

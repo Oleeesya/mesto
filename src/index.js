@@ -4,7 +4,8 @@ import { PopupWithForm } from './PopupWithForm.js'
 import { PopupWithImage } from './PopupWithImage.js'
 import { UserInfo } from './UserInfo.js'
 import { FormValidator } from './FormValidator.js'
-import { validationConfig, initialCards, jobEdit, inputEdit, popupElementImage } from './initial.js';
+import { validationConfig, jobEdit, inputEdit, initialCards } from './initial.js';
+import './pages/index.css'; // добавьте импорт главного файла стилей 
 
 
 // --- Попап редактирования профиля ---
