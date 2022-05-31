@@ -37,6 +37,7 @@ export const initialCards = [
 
 export const inputEdit = document.querySelector('.popup__input_edit_header');
 export const jobEdit = document.querySelector('.popup__input_edit_paragraph');
+export const avatarEdit = document.querySelector('.profile__avatar');
 
 export const validationConfig = {
     formSelector: '.popup__content',

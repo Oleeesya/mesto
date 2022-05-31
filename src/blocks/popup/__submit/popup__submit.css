@@ -1,6 +1,6 @@
 .popup__submit {
   box-sizing: border-box;
-  margin: 0;
+  margin: 21px 0 0;
   padding: 14px 124px 18px 125px;
   max-width: 358px;
   height: 50px;
@@ -12,7 +12,6 @@
   text-align: center;
   border: none;
   border-radius: 2px;
-  margin-top: 21px;
 }
 
 .popup__submit:not([disabled]):hover {

@@ -1,14 +1,16 @@
 .profile__edit-button {
   box-sizing: border-box;
   margin: 0 0 15px;
-  padding: 0;
+  padding: 7px;
+  border: 1px solid #fff;
   width: 24px;
   height: 24px;
   grid-area: edit-button;
   background: #000;
-  border: none;
   background-image: url(../../../img/Edit-Button.svg);
-  background-size: 24px;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .profile__edit-button:hover {

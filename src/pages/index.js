@@ -2,10 +2,40 @@ import { Card } from '../components/Card.js'
 import { Section } from '../components/Section.js'
 import { PopupWithForm } from '../components/PopupWithForm.js'
 import { PopupWithImage } from '../components/PopupWithImage.js'
+import { PopupWithAvatar } from '../components/PopupWithAvatar.js'
+
+import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
-import { validationConfig, jobEdit, inputEdit, initialCards } from '../components/initial.js';
+import { validationConfig, jobEdit, inputEdit, avatarEdit } from '../components/initial.js';
 import './index.css'; // добавьте импорт главного файла стилей 
+import { Api } from '../components/API.js'
+
+const config = {
+  url: 'https://mesto.nomoreparties.co/v1/cohort-42',
+  header: {
+    authorization: 'b4769460-c207-4cd1-a9d9-ca6bcf7522ce',
+    'Content-Type': 'application/json'
+  }
+}
+
+const api = new Api(config);
+
+api.getUserInfo().then((users) => {
+  userInfo.setUserInfo(users),
+    userInfo.setAvatar(users)
+})
+
+api.getInitialCards().then((initialCards) => {
+  cardSection.renderItem(initialCards);
+  // console.log(initialCards)
+  // api.likeCards({_id: initialCards.id})
+});
+
+
+const initialCards = [];
+
+
 
 
 // --- Попап редактирования профиля ---
@@ -18,6 +48,7 @@ const popupWithFormEdit = new PopupWithForm('.popup_type_edit',
   {
     handleFormSubmit: (formData) => {
       userInfo.setUserInfo(formData);
+      api.editUserInfo(formData);
       popupWithFormEdit.close();
     }
   }
@@ -28,7 +59,8 @@ popupWithFormEdit.setEventListeners();
 // Функция редактирования профиля
 function openPopupEdit() {
   inputEdit.value = userInfo.getUserInfo().name;
-  jobEdit.value = userInfo.getUserInfo().info;
+  jobEdit.value = userInfo.getUserInfo().about;
+
   formProfileValidator.clearForm();
   popupWithFormEdit.open();
 };
@@ -69,24 +101,61 @@ const newCard = (formData) => {
     link: formData.url
   };
   cardSection.renderItem([item]);
+  api.postCards(item);
 };
 
 const popupWithImage = new PopupWithImage('.popup_type_image');
 popupWithImage.setEventListeners();
 
 
+// --- Попап удаление карточки ---
+const popupWithFormRemove = new PopupWithConfirmation('.popup_type_remove-card',
+  {
+    handleFormSubmit: (id) => {
+      api.deleteCard({ _id: id });
+      popupWithFormRemove.close();
+    }
+  }
+);
+
+popupWithFormRemove.setEventListeners();
+
+// --- Попап редактирования аватара --- 
+const profileAvatar = document.querySelector('.profile__avatar')
+const popupWithFormAvatar = new PopupWithAvatar('.popup_type_edit-avatar',
+{
+  handleFormSubmit: (id) => {
+
+    // api.deleteCard({ _id: id });
+    popupWithFormAvatar.close();
+  }
+}
+);
+// Функция редактирования аватара
+function openPopupAvatar() {
+  // inputEdit.value = userInfo.getUserInfo().name;
+  // jobEdit.value = userInfo.getUserInfo().about;
+
+  // formProfileValidator.clearForm();
+  popupWithFormAvatar.open();
+};
+
+profileAvatar.addEventListener('click', openPopupAvatar)
+
 // Функция генерации разметки карточки
 const cardSection = new Section({
   items: initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#template-element', popupWithImage.open);
-    const cardElement = card.generateCard();
+
+    const card = new Card(item, '#template-element', popupWithImage.open, popupWithFormRemove.open,
+    api.likeCards, api.deleteLikeCards);
+    const cardElement = card.generateCard(userInfo.myId);
+
     return cardElement;
   }
 },
   '.elements');
 
-cardSection.renderItem(initialCards);
 
 // --- Создание экземпляра валидатора редактирования профиля через класс FormValidator ---
 const formProfileValidator = new FormValidator(validationConfig, formElementEdit);
@@ -97,4 +166,4 @@ const formAddCreat = new FormValidator(validationConfig, formElementCreate);
 formAddCreat.enableValidation();
 
 // --- Создание экземпляра класса отображения информации на странице ---
-const userInfo = new UserInfo({ name: ".profile__title", info: ".profile__subtitle" });
+const userInfo = new UserInfo({ name: ".profile__title", about: ".profile__subtitle", avatar: ".profile__avatar_img" });

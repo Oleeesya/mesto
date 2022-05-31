@@ -7,6 +7,7 @@ export class Section {
 
     // Отрисовка элементов
     renderItem(Cards) {
+        Cards.reverse();
         Cards.forEach((card) => {
             this.addItem(this._renderer(card));
         })
