@@ -165,4 +165,4 @@ const formAvatarValidator = new FormValidator(validationConfig, formElementAvata
 formAvatarValidator.enableValidation();
 
 // --- Создание экземпляра класса отображения информации на странице ---
-const userInfo = new UserInfo({ name: ".profile__title", about: ".profile__subtitle", avatar: ".profile__avatar_img" });
+const userInfo = new UserInfo({ name: ".profile__title", about: ".profile__subtitle", avatar: ".profile__img" });
