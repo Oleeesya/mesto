@@ -3,12 +3,11 @@ import { Section } from '../components/Section.js'
 import { PopupWithForm } from '../components/PopupWithForm.js'
 import { PopupWithImage } from '../components/PopupWithImage.js'
 import { PopupWithAvatar } from '../components/PopupWithAvatar.js'
-
 import { PopupWithConfirmation } from '../components/PopupWithConfirmation.js'
 import { UserInfo } from '../components/UserInfo.js'
 import { FormValidator } from '../components/FormValidator.js'
-import { validationConfig, jobEdit, inputEdit, avatarEdit } from '../components/initial.js';
-import './index.css'; // добавьте импорт главного файла стилей 
+import { validationConfig, jobEdit, inputEdit } from '../components/initial.js';
+import './index.css';
 import { Api } from '../components/API.js'
 
 const config = {
@@ -28,15 +27,9 @@ api.getUserInfo().then((users) => {
 
 api.getInitialCards().then((initialCards) => {
   cardSection.renderItem(initialCards);
-  // console.log(initialCards)
-  // api.likeCards({_id: initialCards.id})
 });
 
-
 const initialCards = [];
-
-
-
 
 // --- Попап редактирования профиля ---
 const popupElementEdit = document.querySelector('.popup_type_edit');
@@ -48,7 +41,8 @@ const popupWithFormEdit = new PopupWithForm('.popup_type_edit',
   {
     handleFormSubmit: (formData) => {
       userInfo.setUserInfo(formData);
-      api.editUserInfo(formData);
+
+      api.editUserInfo(formData, popupWithFormEdit.btn);
       popupWithFormEdit.close();
     }
   }
@@ -77,7 +71,7 @@ const createButton = document.querySelector('.profile__add-button');
 const popupWithFormCreate = new PopupWithForm('.popup_type_create',
   {
     handleFormSubmit: (formData) => {
-      newCard(formData);
+      newCard(formData, popupWithFormCreate);
       popupWithFormCreate.close();
     }
   }
@@ -95,13 +89,13 @@ function openPopupCreate() {
 createButton.addEventListener('click', openPopupCreate);
 
 // Функция добавления новой карточки
-const newCard = (formData) => {
+const newCard = (formData, popupWithFormCreate) => {
   const item = {
     name: formData.title,
     link: formData.url
   };
   cardSection.renderItem([item]);
-  api.postCards(item);
+  api.postCards(item, popupWithFormCreate.btn);
 };
 
 const popupWithImage = new PopupWithImage('.popup_type_image');
@@ -122,21 +116,23 @@ popupWithFormRemove.setEventListeners();
 
 // --- Попап редактирования аватара --- 
 const profileAvatar = document.querySelector('.profile__avatar')
+const popupElementAvatar = document.querySelector('.popup_type_edit-avatar');
+const formElementAvatar = popupElementAvatar.querySelector('.popup__content_name_avatar');
 const popupWithFormAvatar = new PopupWithAvatar('.popup_type_edit-avatar',
-{
-  handleFormSubmit: (id) => {
-
-    // api.deleteCard({ _id: id });
-    popupWithFormAvatar.close();
+  {
+    handleFormSubmit: (avatarInfo) => {
+      api.editAvatarUser(avatarInfo, popupWithFormAvatar.btn);
+      popupWithFormAvatar.close();
+    }
   }
-}
 );
+
+popupWithFormAvatar.setEventListeners();
+
 // Функция редактирования аватара
 function openPopupAvatar() {
-  // inputEdit.value = userInfo.getUserInfo().name;
-  // jobEdit.value = userInfo.getUserInfo().about;
-
-  // formProfileValidator.clearForm();
+  formAddCreat.clearForm();
+  formAvatarValidator.clearForm();
   popupWithFormAvatar.open();
 };
 
@@ -146,9 +142,8 @@ profileAvatar.addEventListener('click', openPopupAvatar)
 const cardSection = new Section({
   items: initialCards,
   renderer: (item) => {
-
     const card = new Card(item, '#template-element', popupWithImage.open, popupWithFormRemove.open,
-    api.likeCards, api.deleteLikeCards);
+      api.likeCards, api.deleteLikeCards);
     const cardElement = card.generateCard(userInfo.myId);
 
     return cardElement;
@@ -164,6 +159,10 @@ formProfileValidator.enableValidation();
 // --- Создание экземпляра валидатора добавления новой карточки через класс FormValidator ---
 const formAddCreat = new FormValidator(validationConfig, formElementCreate);
 formAddCreat.enableValidation();
+
+// --- Создание экземпляра валидатора редактирования avatar через класс FormValidator ---
+const formAvatarValidator = new FormValidator(validationConfig, formElementAvatar);
+formAvatarValidator.enableValidation();
 
 // --- Создание экземпляра класса отображения информации на странице ---
 const userInfo = new UserInfo({ name: ".profile__title", about: ".profile__subtitle", avatar: ".profile__avatar_img" });

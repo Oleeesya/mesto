@@ -6,6 +6,7 @@ export class PopupWithImage extends Popup {
         this._popupImage = this._popupElement.querySelector('.popup__image');
         this._popupImageName = this._popupElement.querySelector('.popup__paragraph-image');
     }
+    
     open = (img) => {
         super.open();
         this._popupImageName.textContent = img.alt;

@@ -38,7 +38,8 @@ export class Api {
     }
 
     //редактирование профиля
-    editUserInfo(userInfo) {
+    editUserInfo(userInfo, submit) {
+        submit.textContent = 'Сохранение...';
         return fetch(this._url + '/users/me', {
             method: 'PATCH',
             headers: this._header,
@@ -47,10 +48,18 @@ export class Api {
                 about: userInfo.about
             })
         })
+            .then(handelResponse)
+            .catch((err) => {
+                console.log(err); // выведем ошибку в консоль
+            })
+            .finally(() => {
+                submit.textContent = 'Сохранить';
+            })
     }
 
     //добавление новой карточки
-    postCards(cardInfo) {
+    postCards(cardInfo, submit) {
+        submit.textContent = 'Сохранение...';;
         return fetch(this._url + '/cards', {
             method: 'POST',
             body: JSON.stringify({
@@ -62,7 +71,10 @@ export class Api {
             .then(handelResponse)
             .catch((err) => {
                 console.log(err); // выведем ошибку в консоль
-            });
+            })
+            .finally(() => {
+                submit.textContent = 'Создать';
+            })
     }
 
     //удаление карточки
@@ -102,26 +114,21 @@ export class Api {
     }
 
     // обновление аватара пользователя
-    editAvatarUser(userInfo) {
-        return fetch(this._url + '/users/me/' + userInfo.owner.avatar, {
+    editAvatarUser(avatarInfo, submit) {
+        submit.textContent = 'Сохранение...';;
+        return fetch(this._url + '/users/me/avatar', {
             method: 'PATCH',
             headers: this._header,
-            // body: JSON.stringify({
-            //     name: userInfo.name,
-            //     about: userInfo.about
-            // })
+            body: JSON.stringify({
+                avatar: avatarInfo.url
+            })
         })
+            .then(handelResponse)
+            .catch((err) => {
+                console.log(err); // выведем ошибку в консоль
+            })
+            .finally(() => {
+                submit.textContent = 'Сохранить';
+            })
     }
-
-
-
-    // другие методы работы с API
 }
-
-// const api = new Api({
-//     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
-//     headers: {
-//         authorization: 'b4769460-c207-4cd1-a9d9-ca6bcf7522ce',
-//         'Content-Type': 'application/json'
-//     }
-// }); 

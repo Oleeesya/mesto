@@ -1,5 +1,5 @@
 export class Card {
-    constructor(initialCards, cardSelector, handleCardClick, handletrashClick, handleLikeClick, 
+    constructor(initialCards, cardSelector, handleCardClick, handletrashClick, handleLikeClick,
         handleRemoveLikeClick) {
         this._title = initialCards.name;
         this._link = initialCards.link;
@@ -35,20 +35,15 @@ export class Card {
         this._deleteBtn = this._element.querySelector('.elements__trash');
         this._likeBtn = this._element.querySelector('.elements__like');
         this._amountLikes = this._element.querySelector('.elements__amount');
-
-
         this._amountLikes.textContent = this._likes.length;
         for (let i = 0; i < this._likes.length; i++) {
             if (this._likes[i]._id == myId) {
                 this._likeBtn.classList.toggle('elements__like_active');
             }
         }
-
-
         if (this._userId !== myId && this._userId !== 0) {
             this._deleteBtn.classList.add('elements__trash_hidden');
         }
-
         this._element.querySelector('.elements__title').textContent = this._title;
         this._img.src = this._link;
         this._img.alt = this._title;
@@ -80,9 +75,7 @@ export class Card {
                 this._likeBtn.classList.add('elements__like_active');
                 this._amountLikes.textContent = parseInt(this._amountLikes.textContent) + 1;
                 this._handleRemoveLikeClick({ _id: this._id });
-
             }
-
         })
     };
 };
