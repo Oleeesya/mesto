@@ -6,7 +6,6 @@ const handelResponse = (res) => {
     return Promise.reject(`Ошибка: ${res.status}`);
 }
 
-
 export class Api {
     constructor(options) {
         this._url = options.url;
@@ -19,10 +18,6 @@ export class Api {
             headers: this._header
         })
             .then(handelResponse)
-
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            });
     }
 
     //загрузка карточек с сервера
@@ -31,15 +26,10 @@ export class Api {
             headers: this._header
         })
             .then(handelResponse)
-
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            });
     }
 
     //редактирование профиля
-    editUserInfo(userInfo, submit) {
-        submit.textContent = 'Сохранение...';
+    editUserInfo(userInfo) {
         return fetch(this._url + '/users/me', {
             method: 'PATCH',
             headers: this._header,
@@ -49,32 +39,19 @@ export class Api {
             })
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            })
-            .finally(() => {
-                submit.textContent = 'Сохранить';
-            })
     }
 
     //добавление новой карточки
-    postCards(cardInfo, submit) {
-        submit.textContent = 'Сохранение...';;
+    postCards(cardInfo) {
         return fetch(this._url + '/cards', {
             method: 'POST',
             body: JSON.stringify({
-                link: cardInfo.link,
-                name: cardInfo.name
+                link: cardInfo.url,
+                name: cardInfo.title
             }),
             headers: this._header,
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            })
-            .finally(() => {
-                submit.textContent = 'Создать';
-            })
     }
 
     //удаление карточки
@@ -84,9 +61,6 @@ export class Api {
             headers: this._header,
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err);
-            });
     }
 
     //постановка лайка
@@ -96,26 +70,19 @@ export class Api {
             headers: this._header,
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            });
     }
 
-    // снятие лайка
+    //снятие лайка
     deleteLikeCards = (cardInfo) => {
         return fetch(this._url + '/cards/' + cardInfo._id + '/likes', {
             method: 'DELETE',
             headers: this._header,
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            });
     }
 
     // обновление аватара пользователя
-    editAvatarUser(avatarInfo, submit) {
-        submit.textContent = 'Сохранение...';;
+    editAvatarUser(avatarInfo) {
         return fetch(this._url + '/users/me/avatar', {
             method: 'PATCH',
             headers: this._header,
@@ -124,11 +91,5 @@ export class Api {
             })
         })
             .then(handelResponse)
-            .catch((err) => {
-                console.log(err); // выведем ошибку в консоль
-            })
-            .finally(() => {
-                submit.textContent = 'Сохранить';
-            })
     }
 }

@@ -12,14 +12,12 @@ export class PopupWithConfirmation extends Popup {
 
         this._popupElement.addEventListener('submit', (event) => {
             event.preventDefault();
-            this._handleSubmit(this._cardId);
-            this._card.remove();
+            this._handleSubmit(this._card);
         });
     }
 
-    open = (cardId, card) => {
+    open = (card) => {
         super.open();
-         this._cardId = cardId;
          this._card = card;
     }
 

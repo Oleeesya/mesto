@@ -7,7 +7,7 @@ export class PopupWithForm extends Popup {
         this._popupElement = document.querySelector(selectorPopup);
         this._inputList = this._popupElement.querySelectorAll('.popup__input');
         this._popupForm = this._popupElement.querySelector('.popup__content');
-        this.btn = this._popupForm.querySelector('.popup__submit');
+        this.btn = this._popupElement.querySelector('.popup__submit');
     }
 
     _getInputValues() {
@@ -26,7 +26,6 @@ export class PopupWithForm extends Popup {
             event.preventDefault();
             this._handleFormSubmit(this._getInputValues(), this.btn);
         });
-
     }
 
     //закрытие попапа и сброс формы при закрытии попапа

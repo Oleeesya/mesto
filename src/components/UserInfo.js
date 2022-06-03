@@ -17,6 +17,7 @@ export class UserInfo {
         this.myId = formData._id;
     }
 
+    // устанавливает аватар пользователя
     setAvatar(formData){
         this._avatarUser.setAttribute('src', formData.avatar);
     }
