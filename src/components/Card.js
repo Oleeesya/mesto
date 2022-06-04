@@ -11,18 +11,17 @@ export class Card {
         this._handleLikeClick = handleLikeClick;
         this._userId = initialCards.owner._id;
         this._likes = initialCards.likes;
-        this._amountLikes = this._likes.length;
         this.liked = false;
     };
 
-    upLike() {
+    updateLikes(likeInfo) {
         if (this.liked) {
             this._likeBtn.classList.remove('elements__like_active');
-            this._amountLikes.textContent = parseInt(this._amountLikes.textContent) - 1;
+            this._amountLikes.textContent = likeInfo.likes.length;
             this.liked = false;
         } else {
             this._likeBtn.classList.add('elements__like_active');
-            this._amountLikes.textContent = parseInt(this._amountLikes.textContent) + 1;
+            this._amountLikes.textContent = likeInfo.likes.length;
             this.liked = true;
         }
     }

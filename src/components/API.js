@@ -1,15 +1,15 @@
-const handelResponse = (res) => {
-    if (res.ok) {
-        return res.json();
-    }
-    // если ошибка, отклоняем промис
-    return Promise.reject(`Ошибка: ${res.status}`);
-}
-
 export class Api {
     constructor(options) {
         this._url = options.url;
         this._header = options.header;
+    }
+
+    _handleResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        // если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
     }
 
     //загрузка информации о пользователе
@@ -17,7 +17,7 @@ export class Api {
         return fetch(this._url + '/users/me', {
             headers: this._header
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //загрузка карточек с сервера
@@ -25,7 +25,7 @@ export class Api {
         return fetch(this._url + '/cards', {
             headers: this._header
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //редактирование профиля
@@ -38,7 +38,7 @@ export class Api {
                 about: userInfo.about
             })
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //добавление новой карточки
@@ -51,7 +51,7 @@ export class Api {
             }),
             headers: this._header,
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //удаление карточки
@@ -60,7 +60,7 @@ export class Api {
             method: 'DELETE',
             headers: this._header,
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //постановка лайка
@@ -69,7 +69,7 @@ export class Api {
             method: 'PUT',
             headers: this._header,
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     //снятие лайка
@@ -78,7 +78,7 @@ export class Api {
             method: 'DELETE',
             headers: this._header,
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 
     // обновление аватара пользователя
@@ -90,6 +90,6 @@ export class Api {
                 avatar: avatarInfo.url
             })
         })
-            .then(handelResponse)
+            .then(this._handleResponse)
     }
 }

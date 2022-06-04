@@ -20,9 +20,9 @@ export class Popup {
     }
     //слушатели клика закрытия попапа
     setEventListeners() {
-        this._popupElement.addEventListener('click', (event) => {
+        this._popupElement.addEventListener('mousedown', (event) => {
             if (event.target.classList.contains('popup__close-button') || event.target.classList.contains('popup')) {
-                this.close(this._popupElement);
+                this.close();
             }
         });
     }

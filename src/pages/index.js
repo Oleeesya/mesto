@@ -34,8 +34,8 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
     // Функция редактирования профиля
     function openPopupEdit() {
-      inputEdit.value = userInfo.getUserInfo().name;
-      jobEdit.value = userInfo.getUserInfo().about;
+      const uInfo = userInfo.getUserInfo();
+      popupWithFormEdit.setInputValues(uInfo);
 
       formProfileValidator.clearForm();
       popupWithFormEdit.open();
@@ -45,15 +45,17 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     const popupWithFormEdit = new PopupWithForm('.popup_type_edit',
       {
         handleFormSubmit: (formData) => {
-          userInfo.setUserInfo(formData);
-          popupWithFormEdit.btn.textContent = 'Сохранение...';
+          popupWithFormEdit.renderLoading('Сохранение...');
           api.editUserInfo(formData)
             .then(() => {
               popupWithFormEdit.close();
-
+              userInfo.setUserInfo(formData);
             })
             .finally(() => {
-              popupWithFormEdit.btn.textContent = 'Сохранить';
+              popupWithFormEdit.renderLoading();
+            })
+            .catch(err => {
+              console.log(err); // выведем ошибку в консоль
             });
         }
       }
@@ -64,7 +66,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     // --- Функция открытия попапа добавления новой карточки ---
     function openPopupCreate() {
       formAddCreat.clearForm();
-      popupWithFormCreate.open(popupElementCreate);
+      popupWithFormCreate.open();
     };
 
 
@@ -72,14 +74,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     const popupWithFormCreate = new PopupWithForm('.popup_type_create',
       {
         handleFormSubmit: (formData) => {
-          popupWithFormCreate.btn.textContent = 'Сохранение...';
+          popupWithFormCreate.renderLoading('Сохранение...');
           api.postCards(formData)
             .then((res) => {
-              newCard(res);
+              addNewCard(res);
               popupWithFormCreate.close();
             })
             .finally(() => {
-              popupWithFormCreate.btn.textContent = 'Создать';
+              popupWithFormCreate.renderLoading('Создать');
             })
         }
       }
@@ -91,15 +93,18 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     const popupWithFormAvatar = new PopupWithForm('.popup_type_edit-avatar',
       {
         handleFormSubmit: (avatarInfo) => {
-          popupWithFormAvatar.btn.textContent = 'Сохранение...';
+          popupWithFormAvatar.renderLoading('Сохранение...');
           api.editAvatarUser(avatarInfo)
             .then(() => {
               userInfo.setAvatar({ avatar: avatarInfo.url }),
                 popupWithFormAvatar.close();
             })
             .finally(() => {
-              popupWithFormAvatar.btn.textContent = 'Сохранить';
+              popupWithFormAvatar.renderLoading();
             })
+            .catch(err => {
+              console.log(err); // выведем ошибку в консоль
+            });
         }
       }
     );
@@ -133,7 +138,7 @@ const formElementCreate = popupElementCreate.querySelector('.popup__content_name
 const createButton = document.querySelector('.profile__add-button');
 
 // Функция добавления новой карточки
-const newCard = (formData) => {
+const addNewCard = (formData) => {
   cardSection.renderItem([formData]);
 };
 
@@ -149,6 +154,9 @@ const popupWithFormRemove = new PopupWithConfirmation('.popup_type_remove-card',
           card.removeCard();
           popupWithFormRemove.close();
         })
+        .catch(err => {
+          console.log(err); // выведем ошибку в консоль
+        });
     }
   }
 );
@@ -182,14 +190,20 @@ const cardSection = new Section({
         handleLikeClick: (card) => {
           if (!card.liked) {
             api.likeCards(card)
-              .then(() => {
-                card.upLike()
+              .then((res) => {
+                card.updateLikes(res)
               })
+              .catch(err => {
+                console.log(err); // выведем ошибку в консоль
+              });
           } else {
             api.deleteLikeCards(card)
-              .then(() => {
-                card.upLike()
+              .then((res) => {
+                card.updateLikes(res)
               })
+              .catch(err => {
+                console.log(err); // выведем ошибку в консоль
+              });
           }
 
         }

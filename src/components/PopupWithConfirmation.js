@@ -4,7 +4,6 @@ export class PopupWithConfirmation extends Popup {
     constructor(selector, { handleFormSubmit }) {
         super(selector);
         this._handleSubmit = handleFormSubmit;
-        this._popupElement = document.querySelector(selector);
     }
     //слушатели клика закрытия попапа
     setEventListeners() {
